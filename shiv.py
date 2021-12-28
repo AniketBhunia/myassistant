@@ -63,8 +63,8 @@ if __name__ == "__main__":
          webbrowser.open("youtube.com")   
       elif 'open google' in query:
          webbrowser.open("google.com")     
-      elif 'open stackoverflow' in query:
-         webbrowser.open("stackoverflow.com")   
+      elif 'image of a cat' in query:
+         webbrowser.open("https://www.google.com/search?q=cat+images&sxsrf=AOaemvKACa5AwGHOmotUfp8E9ZL21uA-DA:1640709754272&tbm=isch&source=iu&ictx=1&fir=--16yG3LYPKNHM%252CrNJwENmHQ-ZHoM%252C_%253B_tJ9zISYcJ92GM%252CrzUo6RAz-vdsGM%252C_%253Baiul5-jr8DbWEM%252C6MsMJjk6eGCktM%252C_%253Br8gSbpVXU-d6FM%252CZx4TpH0a6gviqM%252C_%253BEs67tGnJFqXXFM%252CS6cybHMOSoZBQM%252C_%253BA_TJ5B4BpiRzNM%252CMia68JDKgpGbjM%252C_%253BNleIXKNfiJGUxM%252CFpFnzuctxfxSjM%252C_%253BSrn-aE4ZIIfbTM%252ChVpvvL-HxQGRYM%252C_%253BDfSaG3zDhKFujM%252ChVpvvL-HxQGRYM%252C_%253B037MLB2Kb6ZsfM%252C0xXBTE87P7Nj0M%252C_%253B6Igr2TbrhulyUM%252CK6Qd9XWnQFQCoM%252C_%253B9wap5LETXIiyeM%252CvmACvpHeD8wjzM%252C_%253B5uW4kYivZsexHM%252CCnZWxvwFxgFntM%252C_%253Bi5kllKf0o4WrfM%252CNtRtX0ni-SnqQM%252C_%253BesS6oQWQ5zwjyM%252Cx9jvP824aWKNPM%252C_%253BosXeu6XWatqycM%252CTmUkLtkPkKEi5M%252C_%253Bm4e4TjlJ1-TMZM%252CmIXEnR7F0v-RIM%252C_&vet=1&usg=AI4_-kQli5qCTlvEbMBVEH3XJP-YKwukDA&sa=X&ved=2ahUKEwjyiNSQ-Ib1AhX3sVYBHbYKC9UQ9QF6BAgDEAE#imgrc=--16yG3LYPKNHM")   
 
       elif 'the time' in query:
          strTime = datetime.datetime.now().strftime("%H:%M:%S")
