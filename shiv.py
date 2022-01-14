@@ -5,6 +5,11 @@ import pyaudio
 import wikipedia
 import webbrowser
 import os
+import shutil
+import random
+import requests
+import json
+import time
 engine  = pyttsx3.init('sapi5')
 voices  = engine.getProperty('voices')
 #print(voices[1].id)
@@ -27,7 +32,19 @@ def wishMe():
     else:
        speak("Good Evening!")
 
-    speak("hey boss how can i help u ")
+def username():
+    speak("What should i call you sir")
+    uname = takeCommand()
+    speak("Welcome Mister")
+    speak(uname)
+    columns = shutil.get_terminal_size().columns
+     
+    print("####################".center(columns))
+    print("Welcome Mr.", uname.center(columns))
+    print("#####################".center(columns))
+     
+    speak("How can i Help you, Sir")
+
 def takeCommand():
     #it takes microphone input from the user and returns string output
     r = sr.Recognizer()
@@ -48,8 +65,13 @@ def takeCommand():
        return "None"
     return query   
 if __name__ == "__main__":
+   clear = lambda: os.system('cls')
+   
+   clear()
    wishMe()
-   if 1:
+   username()
+   
+   while True:
       query = takeCommand().lower()  
 
       if 'wikipedia' in query:
@@ -58,22 +80,79 @@ if __name__ == "__main__":
          results = wikipedia.summary(query, sentences=2)
          speak ("According to wikipedia")
          speak (results)
-
+      
+      elif 'how are you ' in query:
+         speak ("I am good , How are you?")
+      elif 'fine' in query or "good" in query:
+            speak("It's good to know that your fine")
+   
       elif 'open youtube' in query:
-         webbrowser.open("youtube.com")   
+         webbrowser.open("https://youtube.com")   
       elif 'open google' in query:
-         webbrowser.open("google.com")     
-      elif 'image of a cat' in query:
-         webbrowser.open("https://www.google.com/search?q=cat+images&sxsrf=AOaemvKACa5AwGHOmotUfp8E9ZL21uA-DA:1640709754272&tbm=isch&source=iu&ictx=1&fir=--16yG3LYPKNHM%252CrNJwENmHQ-ZHoM%252C_%253B_tJ9zISYcJ92GM%252CrzUo6RAz-vdsGM%252C_%253Baiul5-jr8DbWEM%252C6MsMJjk6eGCktM%252C_%253Br8gSbpVXU-d6FM%252CZx4TpH0a6gviqM%252C_%253BEs67tGnJFqXXFM%252CS6cybHMOSoZBQM%252C_%253BA_TJ5B4BpiRzNM%252CMia68JDKgpGbjM%252C_%253BNleIXKNfiJGUxM%252CFpFnzuctxfxSjM%252C_%253BSrn-aE4ZIIfbTM%252ChVpvvL-HxQGRYM%252C_%253BDfSaG3zDhKFujM%252ChVpvvL-HxQGRYM%252C_%253B037MLB2Kb6ZsfM%252C0xXBTE87P7Nj0M%252C_%253B6Igr2TbrhulyUM%252CK6Qd9XWnQFQCoM%252C_%253B9wap5LETXIiyeM%252CvmACvpHeD8wjzM%252C_%253B5uW4kYivZsexHM%252CCnZWxvwFxgFntM%252C_%253Bi5kllKf0o4WrfM%252CNtRtX0ni-SnqQM%252C_%253BesS6oQWQ5zwjyM%252Cx9jvP824aWKNPM%252C_%253BosXeu6XWatqycM%252CTmUkLtkPkKEi5M%252C_%253Bm4e4TjlJ1-TMZM%252CmIXEnR7F0v-RIM%252C_&vet=1&usg=AI4_-kQli5qCTlvEbMBVEH3XJP-YKwukDA&sa=X&ved=2ahUKEwjyiNSQ-Ib1AhX3sVYBHbYKC9UQ9QF6BAgDEAE#imgrc=--16yG3LYPKNHM")   
+         webbrowser.open("https://google.com")     
+      
+      elif 'search' in query or 'play' in query:
+             
+            query = query.replace("search", "")
+            query = query.replace("play", "")         
+            webbrowser.open(query)
 
       elif 'the time' in query:
          strTime = datetime.datetime.now().strftime("%H:%M:%S")
          speak(f"Sir, the Time is {strTime}")
+
+      elif 'play music' in query or "play song" in query:
+            speak("Here you go with music")   
+            music_dir = "C:\\Users\KIIT\Downloads\songs"
+            songs = os.listdir(music_dir)
+            print(songs)
+            random = os.startfile(os.path.join(music_dir, songs[1]))
+      
+      elif "where is" in query:
+            query = query.replace("where is", "")
+            location = query
+            speak("User asked to Locate")
+            speak(location)
+            webbrowser.open("https://www.google.nl/maps/place/" + location + "")
+
+      elif "weather" in query:
+            api_key = "d9825cf355fe5a71473bb238cdede267"
+            base_url = "http://api.openweathermap.org/data/2.5/weather?"
+            speak(" City name ")
+            print("City name : ")
+            city_name = takeCommand()
+            complete_url = base_url + "&q=" + city_name + "&appid=" + api_key 
+            response = requests.get(complete_url)
+            x = response.json()
+             
+            if x["cod"] != "404":
+                y = x["main"]
+                current_temperature = y["temp"]
+                current_pressure = y["pressure"]
+                current_humidiy = y["humidity"]
+                z = x["weather"]
+                weather_description = z[0]["description"]
+                result = (" Temperature (in kelvin) = " +str(current_temperature)+"\n atmospheric pressure (in hPa unit) ="+str(current_pressure) +"\n humidity (in percentage) = " +str(current_humidiy) +"\n description = " +str(weather_description))
+                speak(result)
+                print(result)
+             
+            else:
+                speak(" City Not Found ")    
+
+
+
+      elif "don't listen" in query or "stop listening" in query:
+            speak("for how much time you want to stop me from listening commands")
+            a = int(takeCommand())
+            time.sleep(a)
+            print(a)
+
+
       elif 'open code' in query:
          codePath = "C:\\Users\\KIIT\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"  
          os.startfile(codePath)      
-      if 'quit' in query:
-       exit
+      elif 'stop' in query:
+       exit()
        
       
 
